@@ -133,8 +133,8 @@ class TradeAPI(OkxClient):
         return self._request_with_params(GET, ORDERS_ALGO_HISTORY, params)
 
     # Get Transaction Details History
-    def get_fills_history(self, instType, uly='', instId='', ordId='', after='', before='', limit='', instFamily=''):
-        params = {'instType': instType, 'uly': uly, 'instId': instId, 'ordId': ordId, 'after': after, 'before': before,
+    def get_fills_history(self, instType, uly='', instId='', ordId='', begin='', end='', after='', before='', limit='', instFamily=''):
+        params = {'instType': instType, 'uly': uly, 'instId': instId, 'ordId': ordId, 'begin': begin, 'end': end, 'after': after, 'before': before,
                   'limit': limit, 'instFamily': instFamily}
         return self._request_with_params(GET, ORDERS_FILLS_HISTORY, params)
 
