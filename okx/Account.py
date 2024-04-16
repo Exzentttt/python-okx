@@ -4,7 +4,8 @@ from .consts import *
 
 class AccountAPI(OkxClient):
 
-    def __init__(self, api_key='-1', api_secret_key='-1', passphrase='-1', use_server_time=False, flag='1', domain = 'https://www.okx.com',debug = True,proxy = None):
+    def __init__(self, api_key='-1', api_secret_key='-1', passphrase='-1', use_server_time=False, flag='1',
+                 domain='https://www.okx.com', debug=True, proxy=None):
         OkxClient.__init__(self, api_key, api_secret_key, passphrase, use_server_time, flag, domain, debug, proxy)
 
     # Get Positions
@@ -26,7 +27,8 @@ class AccountAPI(OkxClient):
         params = {'instType': instType, 'instId': instId}
         return self._request_with_params(GET, POSITION_INFO, params)
 
-    def position_builder(self,inclRealPosAndEq=False, spotOffsetType=None, greeksType=None, simPos=None, simAsset=None):
+    def position_builder(self, inclRealPosAndEq=False, spotOffsetType=None, greeksType=None, simPos=None,
+                         simAsset=None):
         params = {}
         if inclRealPosAndEq is not None:
             params['inclRealPosAndEq'] = inclRealPosAndEq
@@ -41,17 +43,41 @@ class AccountAPI(OkxClient):
         return self._request_with_params(POST, POSITION_BUILDER, params)
 
     # Get Bills Details (recent 7 days)
-    def get_account_bills(self, instType='', ccy='', mgnMode='', ctType='', type='', subType='', after='', before='',
-                         limit=''):
+    def get_account_bills(
+            self,
+            instType='',
+            ccy='',
+            mgnMode='',
+            ctType='',
+            type='',
+            subType='',
+            begin='',
+            end='',
+            after='',
+            before='',
+            limit=''
+    ):
         params = {'instType': instType, 'ccy': ccy, 'mgnMode': mgnMode, 'ctType': ctType, 'type': type,
-                  'subType': subType, 'after': after, 'before': before, 'limit': limit}
+                  'subType': subType, 'begin': begin, 'end': end, 'after': after, 'before': before, 'limit': limit}
         return self._request_with_params(GET, BILLS_DETAIL, params)
 
     # Get Bills Details (recent 3 months)
-    def get_account_bills_archive(self, instType='', ccy='', mgnMode='', ctType='', type='', subType='', after='', before='',
-                          limit=''):
+    def get_account_bills_archive(
+            self,
+            instType='',
+            ccy='',
+            mgnMode='',
+            ctType='',
+            type='',
+            subType='',
+            begin='',
+            end='',
+            after='',
+            before='',
+            limit=''
+    ):
         params = {'instType': instType, 'ccy': ccy, 'mgnMode': mgnMode, 'ctType': ctType, 'type': type,
-                  'subType': subType, 'after': after, 'before': before, 'limit': limit}
+                  'subType': subType, 'begin': begin, 'end': end, 'after': after, 'before': before, 'limit': limit}
         return self._request_with_params(GET, BILLS_ARCHIVE, params)
 
     # Get Account Configuration
@@ -80,8 +106,8 @@ class AccountAPI(OkxClient):
         return self._request_with_params(GET, MAX_AVAIL_SIZE, params)
 
     # Increase / Decrease margin
-    def adjustment_margin(self, instId, posSide, type, amt,loanTrans=''):
-        params = {'instId': instId, 'posSide': posSide, 'type': type, 'amt': amt,'loanTrans':loanTrans}
+    def adjustment_margin(self, instId, posSide, type, amt, loanTrans=''):
+        params = {'instId': instId, 'posSide': posSide, 'type': type, 'amt': amt, 'loanTrans': loanTrans}
         return self._request_with_params(POST, ADJUSTMENT_MARGIN, params)
 
     # Get Leverage
@@ -95,8 +121,8 @@ class AccountAPI(OkxClient):
         return self._request_with_params(GET, MAX_LOAN, params)
 
     # Get Fee Rates
-    def get_fee_rates(self, instType, instId='', uly='', category='',instFamily = ''):
-        params = {'instType': instType, 'instId': instId, 'uly': uly, 'category': category,'instFamily':instFamily}
+    def get_fee_rates(self, instType, instId='', uly='', category='', instFamily=''):
+        params = {'instType': instType, 'instId': instId, 'uly': uly, 'category': category, 'instFamily': instFamily}
         return self._request_with_params(GET, FEE_RATES, params)
 
     # Get interest-accrued
@@ -115,8 +141,8 @@ class AccountAPI(OkxClient):
         return self._request_with_params(POST, SET_GREEKS, params)
 
     # Set Isolated Mode
-    def set_isolated_mode(self, isoMode,type):
-        params = {'isoMode': isoMode, 'type':type}
+    def set_isolated_mode(self, isoMode, type):
+        params = {'isoMode': isoMode, 'type': type}
         return self._request_with_params(POST, ISOLATED_MODE, params)
 
     # Get Maximum Withdrawals
@@ -131,11 +157,11 @@ class AccountAPI(OkxClient):
 
     # Get borrow repay history
     def get_borrow_repay_history(self, ccy='', after='', before='', limit=''):
-        params = {'ccy': ccy, 'after': after, 'before': before, 'limit':limit}
+        params = {'ccy': ccy, 'after': after, 'before': before, 'limit': limit}
         return self._request_with_params(GET, BORROW_REPAY_HISTORY, params)
 
     # Get Obtain borrowing rate and limit
-    def get_interest_limits(self, type='',ccy=''):
+    def get_interest_limits(self, type='', ccy=''):
         params = {'type': type, 'ccy': ccy}
         return self._request_with_params(GET, INTEREST_LIMITS, params)
 
@@ -149,57 +175,58 @@ class AccountAPI(OkxClient):
         params = {'ccy': ccy}
         return self._request_with_params(GET, GREEKS, params)
 
-    #GET /api/v5/account/risk-state
+    # GET /api/v5/account/risk-state
     def get_account_position_risk(self):
         return self._request_without_params(GET, ACCOUNT_RISK)
 
-    #GET /api/v5/account/positions-history
-    def get_positions_history(self,instType = '', instId = '',mgnMode = '',type = '',posId = '',after = '',before ='',limit = ''):
+    # GET /api/v5/account/positions-history
+    def get_positions_history(self, instType='', instId='', mgnMode='', type='', posId='', after='', before='',
+                              limit=''):
         params = {
-            'instType':instType,
-            'instId':instId,
-            'mgnMode':mgnMode,
-            'type':type,
-            'posId':posId,
-            'after':after,
-            'before':before,
-            'limit':limit
+            'instType': instType,
+            'instId': instId,
+            'mgnMode': mgnMode,
+            'type': type,
+            'posId': posId,
+            'after': after,
+            'before': before,
+            'limit': limit
         }
-        return self._request_with_params(GET,POSITIONS_HISTORY,params)
+        return self._request_with_params(GET, POSITIONS_HISTORY, params)
 
-    #GET /api/v5/account/position-tiers
-    def get_account_position_tiers(self,instType = '', uly = '',instFamily = ''):
+    # GET /api/v5/account/position-tiers
+    def get_account_position_tiers(self, instType='', uly='', instFamily=''):
         params = {
-            'instType':instType,
-            'uly':uly,
-            'instFamily':instFamily
+            'instType': instType,
+            'uly': uly,
+            'instFamily': instFamily
         }
-        return self._request_with_params(GET,GET_PM_LIMIT,params)
+        return self._request_with_params(GET, GET_PM_LIMIT, params)
 
-    #- Get VIP interest accrued data
+    # - Get VIP interest accrued data
     def get_VIP_interest_accrued_data(self, ccy='', ordId='', after='', before='', limit=''):
         params = {'ccy': ccy, 'ordId': ordId, 'after': after, 'before': before, 'limit': limit}
         return self._request_with_params(GET, GET_VIP_INTEREST_ACCRUED_DATA, params)
 
-    #- Get VIP interest deducted data
+    # - Get VIP interest deducted data
     def get_VIP_interest_deducted_data(self, ccy='', ordId='', after='', before='', limit=''):
         params = {'ccy': ccy, 'ordId': ordId, 'after': after, 'before': before, 'limit': limit}
         return self._request_with_params(GET, GET_VIP_INTEREST_DEDUCTED_DATA, params)
 
     # - Get VIP loan order list
-    def get_VIP_loan_order_list(self, ordId='',state='', ccy='', after='', before='', limit=''):
-        params = {'ordId': ordId, 'state': state, 'ccy': ccy,'after': after, 'before': before, 'limit': limit}
+    def get_VIP_loan_order_list(self, ordId='', state='', ccy='', after='', before='', limit=''):
+        params = {'ordId': ordId, 'state': state, 'ccy': ccy, 'after': after, 'before': before, 'limit': limit}
         return self._request_with_params(GET, GET_VIP_LOAN_ORDER_LIST, params)
 
-    #- Get VIP loan order detail
+    # - Get VIP loan order detail
     def get_VIP_loan_order_detail(self, ccy='', ordId='', after='', before='', limit=''):
         params = {'ccy': ccy, 'ordId': ordId, 'after': after, 'before': before, 'limit': limit}
         return self._request_with_params(GET, GET_VIP_LOAN_ORDER_DETAIL, params)
 
-    #- Set risk offset type
+    # - Set risk offset type
     def set_risk_offset_typel(self, type=''):
         params = {'type': type}
-        return self._request_with_params(POST, SET_RISK_OFFSET_TYPE,params)
+        return self._request_with_params(POST, SET_RISK_OFFSET_TYPE, params)
 
     # - Set auto loan
     def set_auto_loan(self, autoLoan=''):
@@ -208,6 +235,6 @@ class AccountAPI(OkxClient):
         }
         return self._request_with_params(POST, SET_AUTO_LOAN, params)
 
-    #- Activate option
+    # - Activate option
     def activate_option(self):
         return self._request_without_params(POST, ACTIVSTE_OPTION)
